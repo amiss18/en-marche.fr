@@ -94,6 +94,7 @@
         <service id="AppBundle\Donation\PayboxFormFactory" />
 
         <!-- Membership -->
+        <service id="AppBundle\Command\RemindUnconfirmedMembershipCommand"/>
         <service id="AppBundle\Membership\MembershipRegistrationProcess"/>
         <service id="AppBundle\Membership\AdherentChangeEmailHandler">
             <argument key="$mailer" type="service" id="app.mailer.transactional" />
