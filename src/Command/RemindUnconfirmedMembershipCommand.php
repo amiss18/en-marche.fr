@@ -45,7 +45,7 @@ class RemindUnconfirmedMembershipCommand extends Command
 
         while ($adherents = $this->findUnconfirmed($from, 100)) {
             foreach ($adherents as $adherent) {
-                if ($this->membershipRequestHandler->sendEmailValidation($adherent)) {
+                if ($this->membershipRequestHandler->sendEmailValidation($adherent, true)) {
                     $adherent->setRemindSent(true);
                 }
             }

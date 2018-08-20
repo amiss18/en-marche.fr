@@ -82,7 +82,7 @@ class MembershipRequestHandler
         return $adherent;
     }
 
-    public function sendEmailValidation(Adherent $adherent): bool
+    public function sendEmailValidation(Adherent $adherent, bool $isReminder = false): bool
     {
         $token = AdherentActivationToken::generate($adherent);
 
@@ -90,6 +90,10 @@ class MembershipRequestHandler
         $this->manager->flush();
 
         $activationUrl = $this->generateMembershipActivationUrl($adherent, $token);
+
+        if ($isReminder) {
+            return $this->mailer->sendMessage(AdherentAccountActivationMessage::createReminderFromAdherent($adherent, $activationUrl));
+        }
 
         return $this->mailer->sendMessage(AdherentAccountActivationMessage::createFromAdherent($adherent, $activationUrl));
     }
