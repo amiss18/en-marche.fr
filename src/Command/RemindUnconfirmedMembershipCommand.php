@@ -60,10 +60,10 @@ class RemindUnconfirmedMembershipCommand extends Command
     private function findUnconfirmed(\DateTime $from, int $limit): array
     {
         return $this->adherentRepository
-            ->createQueryBuilder('a')
-            ->where('a.status = :status AND a.activatedAt IS NULL')
-            ->andWhere('a.registeredAt <= :date')
-            ->andWhere('a.remindSent = false')
+            ->createQueryBuilder('adherent')
+            ->where('adherent.status = :status AND adherent.activatedAt IS NULL')
+            ->andWhere('adherent.registeredAt <= :date')
+            ->andWhere('adherent.remindSent = false')
             ->setParameter('status', Adherent::DISABLED)
             ->setParameter('date', $from)
             ->setMaxResults($limit)
