@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\EnMarche;
 
+use AppBundle\Address\GeoCoder;
 use AppBundle\Entity\NewsletterSubscription;
 use AppBundle\Form\NewsletterInvitationType;
 use AppBundle\Form\NewsletterSubscriptionType;
@@ -19,9 +20,9 @@ class NewsletterController extends Controller
      * @Route("/newsletter", name="newsletter_subscription")
      * @Method({"GET", "POST"})
      */
-    public function subscriptionAction(Request $request)
+    public function subscriptionAction(Request $request, GeoCoder $geoCoder)
     {
-        $subscription = new NewsletterSubscription();
+        $subscription = new NewsletterSubscription($geoCoder->getCountryCodeFromIp($request->getClientIp()));
         $subscription->setEmail($request->query->get('mail'));
 
         $form = $this->createForm(NewsletterSubscriptionType::class, $subscription);

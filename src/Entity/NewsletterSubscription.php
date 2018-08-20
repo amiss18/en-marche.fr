@@ -57,6 +57,20 @@ class NewsletterSubscription
      */
     private $postalCode;
 
+    /**
+     * The address country code (ISO2).
+     *
+     * @var string
+     *
+     * @ORM\Column(length=2, nullable=true)
+     */
+    private $country;
+
+    public function __construct(?string $country = null)
+    {
+        $this->country = $country;
+    }
+
     public function __toString()
     {
         return $this->email ?: '';
@@ -90,5 +104,15 @@ class NewsletterSubscription
     public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
+    }
+
+    public function getCountry(): ?string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(string $country): void
+    {
+        $this->country = $country;
     }
 }
